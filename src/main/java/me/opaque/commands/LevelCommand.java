@@ -11,11 +11,11 @@ import org.bukkit.entity.Player;
 
 public class LevelCommand implements CommandExecutor {
 
-    private LPLayerManager lpLayerManager;
-    private MoLevelz plugin;
+    private final LPLayerManager lPlayerManager;
+    private final MoLevelz plugin;
 
-    public LevelCommand(LPLayerManager lpLayerManager, MoLevelz plugin) {
-        this.lpLayerManager = lpLayerManager;
+    public LevelCommand(LPLayerManager lPlayerManager, MoLevelz plugin) {
+        this.lPlayerManager = lPlayerManager;
         this.plugin = plugin;
     }
 
@@ -39,7 +39,7 @@ public class LevelCommand implements CommandExecutor {
                         Player player = plugin.getServer().getPlayer(args[1]);
                         int level = Integer.parseInt(args[2]);
 
-                        LPlayer lPlayer = lpLayerManager.getPlayer(player.getUniqueId());
+                        LPlayer lPlayer = lPlayerManager.getPlayer(player.getUniqueId());
                         lPlayer.setLevel(level);
 
                         sender.sendMessage(Utils.color("&4&l<!> &fSet &6" + player.getName() + "&6's &flevel to &c" + level));
@@ -52,7 +52,7 @@ public class LevelCommand implements CommandExecutor {
                         Player player = plugin.getServer().getPlayer(args[1]);
                         int xp = Integer.parseInt(args[2]);
 
-                        LPlayer lPlayer = lpLayerManager.getPlayer(player.getUniqueId());
+                        LPlayer lPlayer = lPlayerManager.getPlayer(player.getUniqueId());
                         lPlayer.setXp(xp);
 
                         sender.sendMessage(Utils.color("&4&l<!> &fSet &6" + player.getName() + "&6's &fXp to &c" + xp));
@@ -80,7 +80,7 @@ public class LevelCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            LPlayer lPlayer = lpLayerManager.getPlayer(player.getUniqueId());
+            LPlayer lPlayer = lPlayerManager.getPlayer(player.getUniqueId());
 
             player.sendMessage(Utils.color("&4&l<!> &cStats &4&l<!>"));
             player.sendMessage(Utils.color(""));
@@ -88,6 +88,7 @@ public class LevelCommand implements CommandExecutor {
             player.sendMessage(Utils.color("&7Level&8: &4" + lPlayer.getLevel()));
             player.sendMessage(Utils.color("&7XP&8: &c" + lPlayer.getXp()));
         } else {
+            // rude
             sender.sendMessage(Utils.color("&cYOU ARE NOT A PLAYER THEREFORE YOU CANNOT SEE YOUR LEVEL"));
         }
     }

@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
 
-    private MoLevelz plugin;
+    private final MoLevelz plugin;
 
     public PlayerJoin(MoLevelz plugin) {
         this.plugin = plugin;
@@ -20,12 +20,13 @@ public class PlayerJoin implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Utils.debug("player joined", plugin, false);
         Player player = event.getPlayer();
-        LPLayerManager lpLayerManager = new LPLayerManager(plugin);
-        if (!lpLayerManager.hasLevel(player.getUniqueId())) {
+//        LPLayerManager lpLayerManager = new LPLayerManager(plugin);
+//                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^ !??!?!?!? you should only have 1 instance of this!!
+        if (!plugin.getLPlayerManager().hasLevel(player.getUniqueId())) {
             Utils.debug("checked player", plugin, false);
-            lpLayerManager.addPlayer(player.getUniqueId());
+            plugin.getLPlayerManager().addPlayer(player.getUniqueId());
             Utils.debug("added player", plugin, false);
-            lpLayerManager.loadConfig();
+            plugin.getLPlayerManager().loadConfig();
             Utils.debug("loaded config", plugin, false);
         }
     }

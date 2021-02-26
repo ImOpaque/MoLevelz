@@ -15,28 +15,25 @@ import java.util.Random;
 
 public class MobKill implements Listener {
 
-    private LPLayerManager lpLayerManager;
-    private MoLevelz plugin;
+    private final LPLayerManager lPlayerManager;
+    private final MoLevelz plugin;
 
-    public MobKill(MoLevelz plugin, LPLayerManager lpLayerManager) {
-        this.lpLayerManager = lpLayerManager;
+    public MobKill(MoLevelz plugin, LPLayerManager lPlayerManager) {
+        this.lPlayerManager = lPlayerManager;
         this.plugin = plugin;
     }
 
     @EventHandler
     public void onMobKill(EntityDeathEvent event) {
         Entity killer = event.getEntity().getKiller();
-        if (killer instanceof Player) {
-            Player player = (Player) event.getEntity().getKiller();
-            if (player == null) {
-                return;
-            }
+        if (killer != null) {
+            Player player = event.getEntity().getKiller();
             if (event.getEntityType() == EntityType.ZOMBIE) {
                 if (Math.random() < 0.90) {
-                    LPlayer lPlayer = lpLayerManager.getPlayer(player.getUniqueId());
+                    LPlayer lPlayer = lPlayerManager.getPlayer(player.getUniqueId());
                     int xp = getRandomInt(10);
                     lPlayer.addXp(xp);
-                    lpLayerManager.levelUp(player.getUniqueId());
+                    lPlayerManager.levelUp(player.getUniqueId());
                     Utils.send(player, "&a&l+ " + xp);
                     Utils.send(player, "&fXP&8: &6" + lPlayer.getXp());
                 } else {

@@ -23,10 +23,6 @@ public class LPLayerManager {
     }
 
     public LPlayer getPlayer(UUID uuid) {
-        return getPlayer(uuid, false);
-    }
-
-    public LPlayer getPlayer(UUID uuid, boolean loadIfNull) {
         LPlayer lPlayer = players.get(uuid);
         if (lPlayer == null) {
             Utils.debug("LPlayer of " + uuid + " is null, but was requested:", plugin, false);
@@ -127,12 +123,10 @@ public class LPLayerManager {
     public Integer getCost(UUID player) {
         LPlayer lPlayer = getPlayer(player);
         int pLevel = lPlayer.getLevel();
-        int pXp = lPlayer.getXp();
         int cost = 500;
         for (String levels : plugin.getConfig().getConfigurationSection("levels.").getKeys(false)) {
-            int size = plugin.getConfig().getConfigurationSection("levels.").getKeys(false).size() + 1;
             if (Integer.parseInt(levels) == pLevel) {
-                return cost = plugin.getConfig().getInt("levels." + pLevel + ".cost");
+                return plugin.getConfig().getInt("levels." + pLevel + ".cost");
             }
         }
         return cost;

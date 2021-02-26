@@ -14,21 +14,21 @@ import java.io.*;
 
 public final class MoLevelz extends JavaPlugin {
 
-    public static LPLayerManager lpLayerManager;
+    private LPLayerManager lPlayerManager;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-        lpLayerManager = new LPLayerManager(this);
+        lPlayerManager = new LPLayerManager(this);
         Utils.debug("&4&l<!> &cMoLevelz &4&l<!> &a&oEnabling...", this, false);
         registerEvents();
         registerCommands();
         generateConfig();
         generatePlayersConfig();
-        lpLayerManager.loadConfig();
+        lPlayerManager.loadConfig();
         new BukkitRunnable() {
             public void run() {
-                lpLayerManager.saveToDisk();
+                lPlayerManager.saveToDisk();
             }
 
         }.runTaskTimer(this, 1000, 1000);
@@ -36,17 +36,21 @@ public final class MoLevelz extends JavaPlugin {
 
     @Override
     public void onDisable() {
-       lpLayerManager.saveToDisk();
+       lPlayerManager.saveToDisk();
     }
 
     public void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new PlayerLeave(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoin(this), this);
-        Bukkit.getPluginManager().registerEvents(new MobKill(this, lpLayerManager), this);
+        Bukkit.getPluginManager().registerEvents(new MobKill(this, lPlayerManager), this);
     }
 
     public void registerCommands() {
-        this.getCommand("level").setExecutor(new LevelCommand(lpLayerManager, this));
+        this.getCommand("level").setExecutor(new LevelCommand(lPlayerManager, this));
+    }
+
+    public LPLayerManager getLPlayerManager() {
+        return lPlayerManager;
     }
 
     public void generateConfig() {

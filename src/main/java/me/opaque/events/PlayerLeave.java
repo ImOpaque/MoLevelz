@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerLeave implements Listener {
 
-    private MoLevelz plugin;
+    private final MoLevelz plugin;
 
     public PlayerLeave(MoLevelz plugin) {
         this.plugin = plugin;
@@ -20,12 +20,13 @@ public class PlayerLeave implements Listener {
     public void onLeave(PlayerQuitEvent event) {
         Utils.debug("player left", plugin, false);
         Player player = event.getPlayer();
-        LPLayerManager lpLayerManager = new LPLayerManager(plugin);
-        if (lpLayerManager.hasLevel(player.getUniqueId())) {
+//        LPLayerManager lpLayerManager = new LPLayerManager(plugin);
+//        use the same manager each time - don't create a new one because it wont contain the player!!!!!!
+        if (plugin.getLPlayerManager().hasLevel(player.getUniqueId())) {
             Utils.debug("checked player", plugin, false);
-            lpLayerManager.removePlayer(player.getUniqueId());
+            plugin.getLPlayerManager().removePlayer(player.getUniqueId());
             Utils.debug("removed player", plugin, false);
-            lpLayerManager.saveToDisk();
+            plugin.getLPlayerManager().saveToDisk();
             Utils.debug("saved to disk", plugin, false);
         }
     }
