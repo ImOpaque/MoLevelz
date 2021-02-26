@@ -14,7 +14,7 @@ import java.io.*;
 
 public final class MoLevelz extends JavaPlugin {
 
-    public static LPLayerManager lpLayerManager;
+    public LPLayerManager lpLayerManager;
 
     @Override
     public void onEnable() {

@@ -11,8 +11,8 @@ import org.bukkit.entity.Player;
 
 public class LevelCommand implements CommandExecutor {
 
-    private LPLayerManager lpLayerManager;
-    private MoLevelz plugin;
+    private final LPLayerManager lpLayerManager;
+    private final MoLevelz plugin;
 
     public LevelCommand(LPLayerManager lpLayerManager, MoLevelz plugin) {
         this.lpLayerManager = lpLayerManager;
@@ -88,6 +88,7 @@ public class LevelCommand implements CommandExecutor {
             player.sendMessage(Utils.color("&7Level&8: &4" + lPlayer.getLevel()));
             player.sendMessage(Utils.color("&7XP&8: &c" + lPlayer.getXp()));
         } else {
+            // rude
             sender.sendMessage(Utils.color("&cYOU ARE NOT A PLAYER THEREFORE YOU CANNOT SEE YOUR LEVEL"));
         }
     }

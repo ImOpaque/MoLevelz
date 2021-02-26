@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerLeave implements Listener {
 
-    private MoLevelz plugin;
+    private final MoLevelz plugin;
 
     public PlayerLeave(MoLevelz plugin) {
         this.plugin = plugin;

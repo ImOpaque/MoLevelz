@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
 
-    private MoLevelz plugin;
+    private final MoLevelz plugin;
 
     public PlayerJoin(MoLevelz plugin) {
         this.plugin = plugin;

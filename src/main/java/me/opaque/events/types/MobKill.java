@@ -15,8 +15,8 @@ import java.util.Random;
 
 public class MobKill implements Listener {
 
-    private LPLayerManager lpLayerManager;
-    private MoLevelz plugin;
+    private final LPLayerManager lpLayerManager;
+    private final MoLevelz plugin;
 
     public MobKill(MoLevelz plugin, LPLayerManager lpLayerManager) {
         this.lpLayerManager = lpLayerManager;
@@ -26,11 +26,8 @@ public class MobKill implements Listener {
     @EventHandler
     public void onMobKill(EntityDeathEvent event) {
         Entity killer = event.getEntity().getKiller();
-        if (killer instanceof Player) {
-            Player player = (Player) event.getEntity().getKiller();
-            if (player == null) {
-                return;
-            }
+        if (killer != null) {
+            Player player = event.getEntity().getKiller();
             if (event.getEntityType() == EntityType.ZOMBIE) {
                 if (Math.random() < 0.90) {
                     LPlayer lPlayer = lpLayerManager.getPlayer(player.getUniqueId());
