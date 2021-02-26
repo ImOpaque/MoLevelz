@@ -8,3 +8,7 @@ commands:
     description: Main command
     usage: /level
     permission: molevelz.admin
+
+permissions:
+  mogolemz.admin:
+    description: "Admin permission"
