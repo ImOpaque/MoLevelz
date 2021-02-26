@@ -1,0 +1,10 @@
+debug: true
+levels:
+  2:
+    cost: 1000
+  3:
+    cost: 2500
+  4:
+    cost: 5000
+  5:
+    cost: 8000

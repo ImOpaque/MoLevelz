@@ -1,0 +1,10 @@
+name: MoLevelz
+version: ${project.version}
+main: me.opaque.MoLevelz
+api-version: 1.16
+
+commands:
+  level:
+    description: Main command
+    usage: /level
+    permission: molevelz.admin
