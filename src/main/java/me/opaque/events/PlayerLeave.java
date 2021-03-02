@@ -26,8 +26,8 @@ public class PlayerLeave implements Listener {
             Utils.debug("checked player", plugin, false);
             plugin.getLPlayerManager().removePlayer(player.getUniqueId());
             Utils.debug("removed player", plugin, false);
-            plugin.getLPlayerManager().saveToDisk();
-            Utils.debug("saved to disk", plugin, false);
+//            plugin.getLPlayerManager().saveToDisk();   <- you already call this in removePlayer, no need to call twice
+//            Utils.debug("saved to disk", plugin, false);
         }
     }
 }

@@ -1,7 +1,6 @@
 package me.opaque.events;
 
 import me.opaque.MoLevelz;
-import me.opaque.player.LPLayerManager;
 import me.opaque.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,11 +22,11 @@ public class PlayerJoin implements Listener {
 //        LPLayerManager lpLayerManager = new LPLayerManager(plugin);
 //                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^ !??!?!?!? you should only have 1 instance of this!!
         if (!plugin.getLPlayerManager().hasLevel(player.getUniqueId())) {
-            Utils.debug("checked player", plugin, false);
-            plugin.getLPlayerManager().addPlayer(player.getUniqueId());
-            Utils.debug("added player", plugin, false);
-            plugin.getLPlayerManager().loadConfig();
-            Utils.debug("loaded config", plugin, false);
+            Utils.debug("player not loaded", plugin, false);
+//            plugin.getLPlayerManager().addPlayer(player.getUniqueId());
+//            Utils.debug("added player", plugin, false);
+            plugin.getLPlayerManager().loadPlayer(player);
+//            Utils.debug("loaded player", plugin, false);
         }
     }
 }

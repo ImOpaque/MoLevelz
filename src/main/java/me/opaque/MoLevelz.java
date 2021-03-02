@@ -7,6 +7,7 @@ import me.opaque.events.types.MobKill;
 import me.opaque.player.LPLayerManager;
 import me.opaque.utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -25,7 +26,9 @@ public final class MoLevelz extends JavaPlugin {
         registerCommands();
         generateConfig();
         generatePlayersConfig();
-        lPlayerManager.loadConfig();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            lPlayerManager.loadPlayer(player);
+        }
         new BukkitRunnable() {
             public void run() {
                 lPlayerManager.saveToDisk();
