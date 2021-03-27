@@ -31,10 +31,6 @@ public class LPLayerManager {
         return lPlayer;
     }
 
-    public void addPlayer(UUID player) {
-        players.put(player, new LPlayer(1, 0));
-    }
-
     public void removePlayer(UUID uuid) {
         saveToDisk();
         players.remove(uuid);
@@ -46,7 +42,7 @@ public class LPLayerManager {
 
     public void saveToDisk() {
         Utils.debug("&4&l[&cMoLevelz&4&l] &f&oSaving data...", plugin, false);
-        File file = new File(plugin.getDataFolder() + File.separator + "players" + ".yml");
+        File file = new File(plugin.getDataFolder() + File.separator + "players.yml");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -56,8 +52,7 @@ public class LPLayerManager {
         }
 
         YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
-        //data.set("quest-progress", null);
-        if (!(Bukkit.getServer().getOnlinePlayers().size() < 1)) {
+        if (!(Bukkit.getServer().getOnlinePlayers().isEmpty())) {
             for (Map.Entry<UUID, LPlayer> playerLevels : players.entrySet()) {
                 data.set("players." + playerLevels.getKey() + ".name", Bukkit.getPlayer(playerLevels.getKey()).getName());
                 data.set("players." + playerLevels.getKey() + ".level", playerLevels.getValue().getLevel());
@@ -71,24 +66,33 @@ public class LPLayerManager {
         }
     }
 
-    public void loadConfig() {
-        File file = new File(plugin.getDataFolder() + File.separator + "players" + ".yml");
-        YamlConfiguration data = null;
-        if (file.exists()) {
-            data = YamlConfiguration.loadConfiguration(file);
+    public void loadPlayer(Player player) {
+        Utils.debug("loading player " + player.getName() + " <" + player.getUniqueId().toString() + ">", plugin, false);
+        File file = new File(plugin.getDataFolder() + File.separator + "players.yml");
+        YamlConfiguration data;
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                plugin.getLogger().severe("Could not create players.yml");
+                e.printStackTrace();
+                return;
+            }
         }
-        players.clear();
-        //assert data != null;
-        for (String s : data.getConfigurationSection("players").getKeys(false)) {
-
-            int level = data.getInt("players." + s + ".level");
-            int xp = data.getInt("players." + s + ".xp");
+        data = YamlConfiguration.loadConfiguration(file);
+        String uuid = player.getUniqueId().toString();
+        if (data.contains("players." + uuid)) {
+            Utils.debug("player " + player.getName() + " exists in players.yml, using that data", plugin, false);
+            // only attempt to load player if they exist in players.yml
+            int level = data.getInt("players." + uuid + ".level");
+            int xp = data.getInt("players." + uuid + ".xp");
 
             LPlayer lPlayer = new LPlayer(level, xp);
-
-
-            this.players.put(UUID.fromString(s), lPlayer);
-
+            this.players.put(player.getUniqueId(), lPlayer);
+        } else {
+            Utils.debug("player " + player.getName() + " does NOT exist in players.yml, using default values", plugin, false);
+            // player does not exist in players.yml, so create new one instead
+            this.players.put(player.getUniqueId(), new LPlayer(1, 0));
         }
     }
 
